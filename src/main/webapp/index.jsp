@@ -1,5 +1,5 @@
-<html>
+<%@ include file = "header.jsp" %>
 <body>
-<h2>Hello World!</h2>
+	<%@ include file = "login.jsp" %>
 </body>
-</html>
+<%@ include file = "footer.jsp" %>

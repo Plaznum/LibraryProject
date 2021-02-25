@@ -8,7 +8,7 @@ public class ConnectionManager {
 
 	private static final String URL = "jdbc:mysql://localhost:3306/crud_db";
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "200231404";
+	private static final String PASSWORD = "root";
 	
 	private static Connection connection = null;
 	
