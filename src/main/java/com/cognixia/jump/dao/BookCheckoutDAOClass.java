@@ -46,8 +46,7 @@ public class BookCheckoutDAOClass implements BookCheckoutDAO{
 						rs.getInt("patron_id"), 
 						rs.getString("isbn"),
 						rs.getDate("checkedout"),
-						rs.getDate("due_date"),
-						rs.getDate("returned")));
+						rs.getDate("due_date")));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -66,8 +65,7 @@ public class BookCheckoutDAOClass implements BookCheckoutDAO{
 					rs.getInt("patron_id"), 
 					rs.getString("isbn"),
 					rs.getDate("checkedout"),
-					rs.getDate("due_date"),
-					rs.getDate("returned"));
+					rs.getDate("due_date"));
 			
 		}catch(SQLException e) {
 			e.printStackTrace();

@@ -10,15 +10,13 @@ public class BookCheckout {
 	private Date due_date;
 	private Date returned;
 	
-	public BookCheckout(int checkout_id, int patron_id, String isbn, Date checkedout, Date due_date,
-			Date returned) {
+	public BookCheckout(int checkout_id, int patron_id, String isbn, Date checkedout, Date due_date) {
 		super();
 		this.checkout_id = checkout_id;
 		this.patron_id = patron_id;
 		this.isbn = isbn;
 		this.checkedout = checkedout;
 		this.due_date = due_date;
-		this.returned = returned;
 	}
 
 	public String getIsbn() {
