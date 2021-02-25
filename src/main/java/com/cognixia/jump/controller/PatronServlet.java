@@ -63,7 +63,15 @@ public class PatronServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String email = req.getParameter("loginemail");
-		String pass = "";
+		//sign up and update
+		String first_name = req.getParameter("firstname");
+		String last_name = req.getParameter("lastname");
+		String username = req.getParameter("username");
+		String pass = req.getParameter("password");
+		Patron patron = new Patron(0, first_name, last_name, username, pass, true);
+		
+		db.addPatron(patron);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/");
+		dispatcher.forward(req, resp);
 	}
 }
