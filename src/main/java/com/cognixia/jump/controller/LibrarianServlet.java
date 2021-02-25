@@ -71,33 +71,14 @@ public class LibrarianServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String email = req.getParameter("username");
-		String pass = req.getParameter("password");
-		
-		String libcheck = ".+(@librarian\\.com)$";
-		boolean retrieved = false;
-		
-		if(email != libcheck) {
-			//forward to patron post
-		} else {
-			try {
-				ptsmt.setString(1, email);
-				ptsmt.setString(2, pass);
+				//update
+				String username = req.getParameter("username");
+				String pass = req.getParameter("password");
+				Librarian librarian = new Librarian(0,username, pass);
 				
-				retrieved = ptsmt.execute();
-				
-				if(retrieved) {
-					RequestDispatcher dispatcher = req.getRequestDispatcher("/librarian.jsp");
-					dispatcher.forward(req, resp);
-				} else {
-					//wrong password or username 
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-			
-		}
+				db.addLibrarian(librarian);
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/");
+				dispatcher.forward(req, resp);
 	}
 	
 }

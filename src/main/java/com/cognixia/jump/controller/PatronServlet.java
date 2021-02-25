@@ -63,6 +63,7 @@ public class PatronServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//sign up and update
 		String first_name = req.getParameter("firstname");
 		String last_name = req.getParameter("lastname");
 		String username = req.getParameter("username");
