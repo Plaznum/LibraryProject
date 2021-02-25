@@ -1,18 +1,17 @@
-<html>
-<body>
-<h2>Welcome to the Library Portal!</h2>
-
-<form method="POST" action="ActorServlet">
-	<h3>Login</h3>
-	<fieldset>
-	<label for="actorid">Login Email:</label>
-	<input type="text" id="loginemail" name="email">
-	<label for="actorid">Login Password:</label>
-	<input type="text" id="loginpassword" name="pass">
-	<input type="submit">
-	</fieldset>
-	</form>
-<p>For new users, make an account here:</p>
-<a href="./makeacc.jsp">Make Account</a>
-</body>
-</html>
+<%@ include file = "header.jsp" %>
+	<div class="container">
+		<h2>Welcome! Please Login:</h2>
+		<form>
+		  <div class="mb-3">
+		    <label for="username" class="form-label">Username:</label>
+		    <input type="text" class="form-control" id="username" aria-describedby="username">
+		    <div id="username" class="form-text">Please enter your username</div>
+		  </div>
+		  <div class="mb-3">
+		    <label for="password" class="form-label">Password</label>
+		    <input type="password" class="form-control" id="password">
+		  </div>
+		  <button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
+<%@ include file = "footer.jsp" %>
