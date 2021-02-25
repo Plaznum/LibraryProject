@@ -69,13 +69,30 @@ public class LibrarianDAOClass implements LibrarianDAO{
 
 	@Override
 	public boolean updateLibrarian(Librarian l) {
-		// TODO Auto-generated method stub
+		try(PreparedStatement ptsmt = conn.prepareStatement(UPDATE_LIBRARIAN);){
+			ptsmt.setString(1, l.getUsername());
+			ptsmt.setString(2, l.getPassword());
+			
+			
+			if(ptsmt.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteLibrarian(int id) {
-		// TODO Auto-generated method stub
+		try(PreparedStatement ptsmt = conn.prepareStatement(DELETE_LIBRARIAN)){
+			ptsmt.setInt(1, id);
+			if(ptsmt.executeUpdate() > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
