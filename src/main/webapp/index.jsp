@@ -1,5 +1,4 @@
 <%@ include file = "header.jsp" %>
-<body>
-	<%@ include file = "login.jsp" %>
+	<%@ include file = "patron.jsp" %>
 </body>
 <%@ include file = "footer.jsp" %>
