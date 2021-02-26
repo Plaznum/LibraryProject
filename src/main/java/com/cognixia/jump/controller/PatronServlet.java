@@ -3,6 +3,7 @@ package com.cognixia.jump.controller;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -30,7 +31,7 @@ public class PatronServlet extends HttpServlet{
 		this.db = new PatronDAOClass();
 		conn = ConnectionManager.getConnection();
 		try {
-			ptsmt = conn.prepareStatement("SELECT * FROM patrons WHERE username_name = ? AND pass = ?");
+			ptsmt = conn.prepareStatement("SELECT * FROM patrons WHERE username_name = ? AND pass = ? returning patron_id");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -47,9 +48,17 @@ public class PatronServlet extends HttpServlet{
 			ptsmt.setString(1, email);
 			ptsmt.setString(2, pass);
 			
-			retrieved = ptsmt.execute();
 			
-			if(retrieved) {
+			ResultSet rs = ptsmt.executeQuery();
+			
+			req.setAttribute("patronid", rs.getInt("patron_id"));
+			req.setAttribute("firstname", rs.getString("first_name"));
+			req.setAttribute("lastname", rs.getString("last_name"));
+			req.setAttribute("username", rs.getString("username_name"));
+			req.setAttribute("password", rs.getString("pass"));
+			
+			
+			if(rs != null) {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/patron.jsp");
 				dispatcher.forward(req, resp);
 			} else {
@@ -65,11 +74,12 @@ public class PatronServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//login verification 
-		
 		if(req.getParameter("firstname") == null) {
 		doGet(req, resp);
 		return;
 		}
+		
+		
 		
 		//sign up and update
 		String first_name = req.getParameter("firstname");
@@ -77,6 +87,9 @@ public class PatronServlet extends HttpServlet{
 		String username = req.getParameter("username");
 		String pass = req.getParameter("password");
 		Patron patron = new Patron(0, first_name, last_name, username, pass, true);
+		
+		
+		
 		
 		db.addPatron(patron);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/");

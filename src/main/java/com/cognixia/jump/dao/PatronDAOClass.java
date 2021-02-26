@@ -15,13 +15,13 @@ public class PatronDAOClass implements PatronDAO{
 	private static final Connection conn = ConnectionManager.getConnection();
 	
 	private static final String SELECT_ALL_PATRONS = "SELECT * FROM patrons";
-	private static final String SELECT_PATRON_BY_ID = "SELECT * FROM patrons WHERE id = ?";
+	private static final String SELECT_PATRON_BY_ID = "SELECT * FROM patrons WHERE patron_id = ?";
 	private static final String ADD_PATRON = "INSERT INTO "
-			+ "patrons(first_name, last_name, username_name, pass, account_frozen,) "
+			+ "patrons(first_name, last_name, username_name, pass, account_frozen) "
 			+ "values (?, ?, ?, ?, true)";
 	private static final String UPDATE_PATRON = "UPDATE patrons "
-			+ "SET first_name = ?, last_name = ?, username_name = ?, pass = ?, account_frozen = ?, where id = ?";
-	private static final String DELETE_PATRON = "DELETE FROM patrons WHERE id = ?";
+			+ "SET first_name = ?, last_name = ?, username_name = ?, pass = ?, account_frozen = ? where patron_id = ?";
+	private static final String DELETE_PATRON = "DELETE FROM patrons WHERE patron_id = ?";
 	
 	@Override
 	public boolean addPatron(Patron p) {
@@ -43,13 +43,13 @@ public class PatronDAOClass implements PatronDAO{
 
 	@Override
 	public List<Patron> getAllPatrons() {
-		List<Patron> products = new ArrayList<>();
+		List<Patron> patrons = new ArrayList<>();
 		
 		try (PreparedStatement pstmt = conn.prepareStatement(SELECT_ALL_PATRONS);
 				ResultSet rs = pstmt.executeQuery();){
 			
 			while (rs.next()) {
-				products.add(new Patron(rs.getInt("patron_id"), 
+				patrons.add(new Patron(rs.getInt("patron_id"), 
 											rs.getString("first_name"), 
 											rs.getString("last_name"), 
 											rs.getString("username_name"), 
@@ -62,7 +62,7 @@ public class PatronDAOClass implements PatronDAO{
 			e.printStackTrace();
 		}
 		
-		return products;
+		return patrons;
 	}
 
 	@Override
@@ -98,6 +98,7 @@ public class PatronDAOClass implements PatronDAO{
 			ptsmt.setString(3, p.getUsername());
 			ptsmt.setString(4, p.getPassword());
 			ptsmt.setBoolean(5,  p.isAccount_frozen());
+			ptsmt.setInt(6, p.getId());
 			
 			
 			if(ptsmt.executeUpdate() > 0) {
