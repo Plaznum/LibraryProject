@@ -17,7 +17,7 @@ import com.cognixia.jump.dao.PatronDAO;
 import com.cognixia.jump.dao.PatronDAOClass;
 import com.cognixia.jump.model.Patron;
 
-@WebServlet("/PatronServlet")
+
 public class PatronServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +30,7 @@ public class PatronServlet extends HttpServlet{
 		this.db = new PatronDAOClass();
 		conn = ConnectionManager.getConnection();
 		try {
-			ptsmt = conn.prepareStatement("SELECT * FROM patron WHERE username_name = ? AND pass = ?");
+			ptsmt = conn.prepareStatement("SELECT * FROM patrons WHERE username_name = ? AND pass = ?");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +53,8 @@ public class PatronServlet extends HttpServlet{
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/patron.jsp");
 				dispatcher.forward(req, resp);
 			} else {
-				//wrong password or username 
+				//failed login
+				return;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,6 +64,13 @@ public class PatronServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//login verification 
+		
+		if(req.getParameter("firstname") == null) {
+		doGet(req, resp);
+		return;
+		}
+		
 		//sign up and update
 		String first_name = req.getParameter("firstname");
 		String last_name = req.getParameter("lastname");

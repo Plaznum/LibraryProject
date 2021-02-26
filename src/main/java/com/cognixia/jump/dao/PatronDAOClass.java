@@ -14,14 +14,14 @@ public class PatronDAOClass implements PatronDAO{
 
 	private static final Connection conn = ConnectionManager.getConnection();
 	
-	private static final String SELECT_ALL_PATRONS = "SELECT * FROM patron";
-	private static final String SELECT_PATRON_BY_ID = "SELECT * FROM patron WHERE id = ?";
+	private static final String SELECT_ALL_PATRONS = "SELECT * FROM patrons";
+	private static final String SELECT_PATRON_BY_ID = "SELECT * FROM patrons WHERE id = ?";
 	private static final String ADD_PATRON = "INSERT INTO "
-			+ "patron(first_name, last_name, username_name, pass, account_frozen,) "
+			+ "patrons(first_name, last_name, username_name, pass, account_frozen,) "
 			+ "values (?, ?, ?, ?, true)";
-	private static final String UPDATE_PATRON = "UPDATE patron "
+	private static final String UPDATE_PATRON = "UPDATE patrons "
 			+ "SET first_name = ?, last_name = ?, username_name = ?, pass = ?, account_frozen = ?, where id = ?";
-	private static final String DELETE_PATRON = "DELETE FROM patron WHERE id = ?";
+	private static final String DELETE_PATRON = "DELETE FROM patrons WHERE id = ?";
 	
 	@Override
 	public boolean addPatron(Patron p) {
