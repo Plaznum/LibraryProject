@@ -17,10 +17,10 @@ public class PatronDAOClass implements PatronDAO{
 	private static final String SELECT_ALL_PATRONS = "SELECT * FROM patrons";
 	private static final String SELECT_PATRON_BY_ID = "SELECT * FROM patrons WHERE patron_id = ?";
 	private static final String ADD_PATRON = "INSERT INTO "
-			+ "patrons(first_name, last_name, username_name, pass, account_frozen) "
+			+ "patrons(first_name, last_name, username, pass, account_frozen) "
 			+ "values (?, ?, ?, ?, true)";
 	private static final String UPDATE_PATRON = "UPDATE patrons "
-			+ "SET first_name = ?, last_name = ?, username_name = ?, pass = ?, account_frozen = ? where patron_id = ?";
+			+ "SET first_name = ?, last_name = ?, username = ?, pass = ?, account_frozen = ? where patron_id = ?";
 	private static final String DELETE_PATRON = "DELETE FROM patrons WHERE patron_id = ?";
 	
 	@Override
@@ -52,7 +52,7 @@ public class PatronDAOClass implements PatronDAO{
 				patrons.add(new Patron(rs.getInt("patron_id"), 
 											rs.getString("first_name"), 
 											rs.getString("last_name"), 
-											rs.getString("username_name"), 
+											rs.getString("username"), 
 											rs.getString("pass"),
 											rs.getBoolean("account_frozen")));
 			}
@@ -77,7 +77,7 @@ public class PatronDAOClass implements PatronDAO{
 			patron = new Patron(rs.getInt("patron_id"), 
 						rs.getString("first_name"), 
 						rs.getString("last_name"), 
-						rs.getString("username_name"), 
+						rs.getString("username"), 
 						rs.getString("pass"),
 						rs.getBoolean("account_frozen"));
 			

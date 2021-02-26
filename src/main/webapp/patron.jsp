@@ -1,3 +1,4 @@
+<%@ include file = "header.jsp" %>
 <div class="container patrons">
 	<div class="row users mt-5">
 		<div class="d-flex justify-content-center align-content-center">
@@ -106,3 +107,4 @@
 		</div>
 	</div>
 </div>
+<%@ include file = "footer.jsp" %>

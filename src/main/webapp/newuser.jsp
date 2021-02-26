@@ -5,7 +5,7 @@
 	<div class="row mt-2 d-flex justify-content-center"></div>
 	<form class= "m-auto d-flex flex-column justify-content-center align-content-center" method="POST" action="PatronServlet">
       <div id="username" class="form-text">Please enter your first name, last name, username and password</div>
-         
+  
       <div class="mb-3 input-group">
 		<div class="input-group-prepend">
 			<span class="input-group-text">First name: </span>

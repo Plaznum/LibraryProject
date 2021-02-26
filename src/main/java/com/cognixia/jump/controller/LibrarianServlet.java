@@ -86,7 +86,6 @@ public class LibrarianServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-				
 		//freeze and unfreeze
 		if(req.getParameter("changeStatus") != null) {
 			//get patron id from button
@@ -104,29 +103,39 @@ public class LibrarianServlet extends HttpServlet{
 			dispatcher.forward(req, resp);
 			return;
 		} else {
-		//login or signup button verification
-		if(req.getParameter("action").equals("login")) {
+			//login or signup button verification
+			if(req.getParameter("action").equals("login")) {
 				//login verification 
 				if(req.getParameter("firstname") == null) {
-				doGet(req, resp);
-				return;
+					doGet(req, resp);
+					return;
 				}
-		} else {
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/newuser.jsp");
-			dispatcher.forward(req, resp);
-			return;
-		}
-		
-		
-				//update
+			} else if(req.getParameter("action").equals("edit")) {
+				ResultSet rs;
+				
 				String username = req.getParameter("username");
 				String pass = req.getParameter("password");
-				Librarian librarian = new Librarian(0,username, pass);
+				Librarian librarian;
+				try {
+					rs = ptsmt.executeQuery();
+					rs.next();
+					req.setAttribute("librarianid", rs.getInt("librarian_id"));
+					req.setAttribute("username", rs.getString("username"));
+					req.setAttribute("password", rs.getString("pass"));
+					librarian = new Librarian(rs.getInt("librarian_id"),username, pass);
+					db.updateLibrarian(librarian);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
-				db.addLibrarian(librarian);
-				RequestDispatcher dispatcher = req.getRequestDispatcher("/");
+				RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
 				dispatcher.forward(req, resp);
+				return;
+			}
 		}
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/index.jsp");
+		dispatcher.forward(req, resp);
 	}
-	
 }
+

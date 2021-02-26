@@ -17,7 +17,7 @@ public class LibrarianDAOClass implements LibrarianDAO{
 	private static final String ADD_LIBRARIAN = "INSERT INTO librarians(username, password) values (?, ?)";
 	private static final String SELECT_ALL_LIBRARIANS = "SELECT * FROM librarians";
 	private static final String SELECT_LIBRARIAN_BY_ID = "SELECT * FROM librarians WHERE id = ?";
-	private static final String UPDATE_LIBRARIAN = "UPDATE librarians SET username = ?, password = ?, where id = ?";
+	private static final String UPDATE_LIBRARIAN = "UPDATE librarians SET username = ?, pass = ? where librarian_id = ?";
 	private static final String DELETE_LIBRARIAN = "DELETE FROM librarians WHERE id = ?";
 	
 	@Override
@@ -72,6 +72,7 @@ public class LibrarianDAOClass implements LibrarianDAO{
 		try(PreparedStatement pstmt = conn.prepareStatement(UPDATE_LIBRARIAN);){
 			pstmt.setString(1, l.getUsername());
 			pstmt.setString(2, l.getPassword());
+			pstmt.setInt(3, l.getId());
 			
 			
 			if(pstmt.executeUpdate() > 0) {
