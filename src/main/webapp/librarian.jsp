@@ -1,3 +1,5 @@
+<%@page import="com.cognixia.jump.model.Patron"%>
+<%@page import="java.util.List"%>
 <div class="container librarians">
 	<div class="row users mt-5">
 		<div class="d-flex justify-content-center align-content-center">
@@ -12,6 +14,7 @@
 			</div>
 		</div>
 		<div class="m-auto">
+			    <form method="POST" action=LibrarianServlet>
 			<table class="table table-striped">
 			  <thead>
 			    <tr>
@@ -24,38 +27,26 @@
 			    </tr>
 			  </thead>
 			  <tbody>
+			    <%List<Patron> patrons = (List<Patron>) request.getAttribute("patrons");
+			    if (patrons != null){
+			    	for (Patron patron: patrons){
+			    %>
 			    <tr>
-			      <th>1</th>
-			      <td>Mark</td>
-			      <td>Otto</td>
-			      <td>Bookworm</td>
-			      <td>Frozen</td>
-			      <td>
-			      	<button type="button" class="btn btn-outline-danger" name="changeStatus" value="changeStatus">Unfreeze</button>
-			      </td>
+			    <th><%=patron.getId() %></th>
+			    <td><%=patron.getFirst_name() %></td>
+			    <td><%=patron.getLast_name() %></td>
+			    <td><%=patron.getUsername() %></td>
+			    <td><%=patron.isAccount_frozen()%></td>
+			    <td>
+			      	<button type="submit" class="btn btn-outline-info" name="changeStatus" value=<%= "\"" +patron.getId()+ "\"" %>><%=patron.isAccount_frozen()?"frozen":"open" %></button>
+			      </td>	
 			    </tr>
-			    <tr>
-			      <th>2</th>
-			      <td>Buster</td>
-			      <td>Rhymes</td>
-			      <td>Buzzter</td>
-			      <td>Frozen</td>
-			      <td>
-			      	<button type="button" class="btn btn-outline-danger" name="changeStatus" value="changeStatus">Unfreeze</button>
-			      </td>	 
-			    </tr>
-			    <tr>
-			      <th>3</th>
-			      <td>Larry</td>
-			      <td>Bird</td>
-			      <td>theLegend</td>
-			      <td>Open</td>
-			      <td>
-			      	<button type="button" class="btn btn-outline-info" name="changeStatus" value="changeStatus">Freeze</button>
-			      </td>	 
-			    </tr>
+			    
+			    <% }
+			    	}%>
 			  </tbody>
 			</table>
+			      </form>
 		</div>
 	</div>
 	
@@ -64,7 +55,7 @@
 			<div class="col-4">
 				<div class="mt-3 input-group">
 					<span class="input-group-text">Add Book</span>
-					<button type="button" class="btn btn-outline-primary" name="searchBook" value="searchBook">+</button>
+					<a href= "./addbook.jsp" type="button" class="btn btn-outline-primary" name="searchBook" value="searchBook">+</a>
 			  	</div>
 			</div>
 			<h1 class="text-center col-4">Books</h1>
