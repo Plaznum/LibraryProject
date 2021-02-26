@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +30,7 @@ public class PatronServlet extends HttpServlet{
 		this.db = new PatronDAOClass();
 		conn = ConnectionManager.getConnection();
 		try {
-			ptsmt = conn.prepareStatement("SELECT * FROM patrons WHERE username_name = ? AND pass = ? returning patron_id");
+			ptsmt = conn.prepareStatement("SELECT * FROM patrons WHERE username = ? AND pass = ?");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -42,28 +41,22 @@ public class PatronServlet extends HttpServlet{
 		String email = req.getParameter("username");
 		String pass = req.getParameter("password");
 		
-		boolean retrieved = false; 
-		
 		try {
 			ptsmt.setString(1, email);
 			ptsmt.setString(2, pass);
-			
-			
+
 			ResultSet rs = ptsmt.executeQuery();
 			
+			rs.next();
 			req.setAttribute("patronid", rs.getInt("patron_id"));
 			req.setAttribute("firstname", rs.getString("first_name"));
 			req.setAttribute("lastname", rs.getString("last_name"));
-			req.setAttribute("username", rs.getString("username_name"));
+			req.setAttribute("username", rs.getString("username"));
 			req.setAttribute("password", rs.getString("pass"));
-			
 			
 			if(rs != null) {
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/patron.jsp");
 				dispatcher.forward(req, resp);
-			} else {
-				//failed login
-				return;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,18 +72,13 @@ public class PatronServlet extends HttpServlet{
 		return;
 		}
 		
-		
-		
 		//sign up and update
 		String first_name = req.getParameter("firstname");
 		String last_name = req.getParameter("lastname");
 		String username = req.getParameter("username");
 		String pass = req.getParameter("password");
 		Patron patron = new Patron(0, first_name, last_name, username, pass, true);
-		
-		
-		
-		
+
 		db.addPatron(patron);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/");
 		dispatcher.forward(req, resp);

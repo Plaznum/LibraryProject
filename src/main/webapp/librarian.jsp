@@ -1,9 +1,14 @@
 <%@page import="com.cognixia.jump.model.Patron"%>
 <%@page import="java.util.List"%>
+<%@ include file = "header.jsp" %>
 <div class="container librarians">
 	<div class="row users mt-5">
 		<div class="d-flex justify-content-center align-content-center">
-			<div class="col-4"></div>
+			<div class="col-4">
+				<div class="mt-3 input-group">
+					<a href= "./editlibrarian.jsp" type="button" class="btn btn-outline-secondary" name="searchBook" value="searchBook">Edit Librarian</a>
+			  	</div>
+			</div>
 			<h1 class="text-center col-4">Users</h1>
 			<div class="col-4">
 				<div class="mt-3 input-group">
@@ -119,3 +124,4 @@
 		</div>
 	</div>
 </div>
+<%@ include file = "footer.jsp" %>
